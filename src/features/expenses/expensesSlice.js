@@ -102,11 +102,9 @@ export const selectTotalPrice = (state) => {
 export const selectTotalPriceWithTaxes = (state) => {
     return state.expenses.value
         .reduce((accumulator, currentValue) => {
-            return (
-                accumulator + 
-                currentValue.price +
-                (currentValue.price * 0.15)
-            )
+            const total = accumulator + currentValue.price + (currentValue.price * 0.15);
+            console.log('total: ', total);
+            return total;
         }, 0)
 };
 
