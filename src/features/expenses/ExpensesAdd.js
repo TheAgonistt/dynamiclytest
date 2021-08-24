@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { add, remove } from './expensesSlice'
+import { add } from './expensesSlice'
 
 import styles from './ExpensesAdd.module.css';
 

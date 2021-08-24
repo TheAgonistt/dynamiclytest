@@ -10,23 +10,11 @@ export function ExpensesListItem(props) {
 
     const [isEditing, setIsEdition] = useState({
         status: false,
-        key: null,
     });
 
+    const [txtDescription, setTxtDescription] = useState(false);
     const [unitPrice, setUnitPrice] = useState(false);
-
-    /**
-     *
-     * @param id - The id of the item
-     * @param currentUnitPrice - The current unit price of the product
-     */
-    const onEdit = ({id, currentUnitPrice}) => {
-        setIsEdition({
-            status: true,
-            key: id
-        })
-        setUnitPrice(currentUnitPrice);
-    }
+    const [unitAmount, setUnitAmount] = useState(false);
 
     // button handler
     function editingHandler() {
@@ -34,9 +22,11 @@ export function ExpensesListItem(props) {
         // reset the inEditMode state value
         setIsEdition({
             status: !currentState,
-            rowKey: null
         })
+
         // reset the unit price state value
+        setTxtDescription(null);
+        setUnitAmount(null);
         setUnitPrice(null);
     }
 
@@ -44,14 +34,16 @@ export function ExpensesListItem(props) {
         // reset the inEditMode state value
         setIsEdition({
             status: false,
-            rowKey: null
         })
         // reset the unit price state value
+        setTxtDescription(null);
+        setUnitAmount(null);
         setUnitPrice(null);
     }
 
-    function saveHandler({id, newUnitPrice}) {
-        dispatch( update({id, newUnitPrice}) );
+    function saveHandler({id, item}) {
+        // dispatch( update({id, newUnitPrice}) );
+        dispatch( update({id, ...item}) );
         cancelEditingHandler();
     }
 
@@ -73,9 +65,29 @@ export function ExpensesListItem(props) {
 
     return (
         <tr>
-            <td>{props.item.description}</td>
             <td>
-                {props.item.amount}
+                {
+                    isEditing.status ? (
+                        <input
+                            value={txtDescription}
+                            onChange={(event) => setTxtDescription(event.target.value)}
+                        />
+                    ) : (
+                        props.item.description
+                    )
+                }
+            </td>
+            <td>
+                {
+                    isEditing.status ? (
+                        <input
+                            value={unitAmount}
+                            onChange={(event) => setUnitAmount(event.target.value)}
+                        />
+                    ) : (
+                        props.item.amount
+                    )
+                }
             </td>
             <td>
                 {
@@ -85,11 +97,11 @@ export function ExpensesListItem(props) {
                             onChange={(event) => setUnitPrice(event.target.value)}
                         />
                     ) : (
-                        props.item.price
+                        props.item.price + '$'
                     )
                 }
             </td>
-            <td>{(props.item.price * 0.15).toFixed(2)}</td>
+            <td>{(props.item.price * 0.15).toFixed(2)}$</td>
             <td>{props.item.date} at {convertTime(props.item.time)}</td>
             <td className={styles.actions}>
                 <div>
@@ -99,7 +111,14 @@ export function ExpensesListItem(props) {
                             <button
                                 className="btn"
                                 type="submit"
-                                onClick={() => saveHandler({id:props.item.id, newUnitPrice: unitPrice })}
+                                onClick={() => saveHandler({
+                                    id:props.item.id,
+                                    item: {
+                                        newTxtDescription: txtDescription,
+                                        newUnitPrice: unitPrice,
+                                        newUnitAmount: unitAmount
+                                    }
+                                })}
                             >
                                 Save
                             </button>

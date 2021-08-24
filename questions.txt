@@ -83,7 +83,7 @@
 
 
         /******************************
-        ** Question 3
+        ** Question 4
         */
 
         // a) What is wrong in the method `concatenameFields` of class `A` ?  How would you fix it?
@@ -106,10 +106,24 @@
                 this._separator = ' ';
             }
 
+            /**
+            * concat string from and object
+            *
+            * @method
+            * @param {string}
+            * @returns {array}
+            */
             concatenameFields(values) {
                 return [...values].join(this._separator);
             }
 
+            /**
+            * save new items from an array of objects
+            *
+            * @method
+            * @param {array}
+            * @returns {string}
+            */
             async save(items) {
                 const values = items.map(item => item.name);
                 const finalValue = this.concatenameFields(values);
@@ -124,11 +138,22 @@
                 this._separator = '-';
             }
 
+            /**
+            * concat string from and object
+            *
+            * @method
+            * @param {string}
+            * @returns {array}
+            */
             concatenameFields(values) {
                 return `[${super.concatenameFields(values)}]`;
             }
         }
 
+        /**
+        * @method
+        * @returns {boolean}
+        */
         async function testQuestion4() {
             const testInput = [
                 { name: 'this' },

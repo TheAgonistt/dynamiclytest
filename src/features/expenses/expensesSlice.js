@@ -41,11 +41,28 @@ export const expensesSlice = createSlice({
 
         update(state, action) {
             const s = current(state);
+            const payload = action.payload;
             const id = action.payload.id;
-            const newPrice = parseInt(action.payload.newUnitPrice);
+
+            const newDescription = payload.newTxtDescription ? payload.newTxtDescription : null;
+            const newAmount = payload.newUnitAmount ? parseInt(payload.newUnitAmount) : null;
+            const newPrice = payload.newUnitPrice ? parseInt(payload.newUnitPrice) : null;
+
+
             const index = s.value.findIndex(item => item.id === id);
             const updated = {...s.value[index] };
-            updated.price = newPrice;
+
+            if (newDescription) {
+                updated.description = newDescription;
+            }
+
+            if (newAmount) {
+                updated.amount = newAmount;
+            }
+
+            if (newPrice) {
+                updated.price = newPrice;
+            }
 
             return {
                 s,
