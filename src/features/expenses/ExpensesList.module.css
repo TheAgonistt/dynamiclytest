@@ -1,0 +1,22 @@
+.wrapper {
+    margin-top: 75px;
+    width: 100%;
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    max-width: 100%;
+    padding: 0 0 15px 0;
+    /* overflow-x: scroll; */
+}
+
+.table thead tr th {
+    padding: 0 25px 10px 0;
+    min-width: 85px;
+    text-align: left;
+}
+
+.table tbody tr td {
+    padding: 5px 25px 5px 0;
+}

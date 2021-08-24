@@ -1,0 +1,22 @@
+.header {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.header__col {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 250px;
+}
+
+.header__col p {
+  margin: 0 0 1em 0;
+}
+
+
+/* min-width 530px */
+@media screen and (min-width: 530px) {
+  .header__col button {
+    margin-left: auto;
+  }
+}

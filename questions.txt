@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Questions</title>
+    </head>
+
+    <body>
+        <h1>Questions 1 to 5</h1>
+    </body>
+
+    <script>
+        const items_array1 = [];
+        // wacky array to be used for Q1 & Q2
+        for (let j = 1; j < 5; j++) {
+            for (let i = 1; i < 10; i++) {
+                const value = i * j;
+
+                items_array1.push({
+                    name: `item-${i}`,
+                    value: value,
+                })
+            }
+        }
+        // console.log('array: ', items_array1);
+
+        /******************************
+        ** Question 1
+        */
+
+        /** @type {string} */
+        const q1_targetName = 'item-6';
+
+
+        /**
+         * function to calculate the sums of matched elements in an array.
+         *
+         * @param {array} items - An array of objects
+         * @param {string} targetName - A string to be searched
+         * @return {number} Sum of all matched elements
+         *
+         * @example
+         *
+         *     sumAllElementsByName([{}], 'item-8')
+         */
+        const sumAllElementsByName = (items, targetName) => {
+            return items.filter(item => item.name === targetName).map(item => item.value).reduce((accumulator, currentValue) => accumulator + currentValue);
+        }
+
+        console.log('%c --- Question 1 ---', 'background: #4a2260');
+        console.log(sumAllElementsByName(items_array1, q1_targetName));
+        console.log('');
+
+
+
+        
+        /******************************
+        ** Question 2
+        */
+
+        /** @type {string} */
+        const q2_targetName = 'item-7';
+
+        /**
+         * This is a nice function to calculate the average of matched elements in an array.
+         *
+         * @param {array} items - An array of objects
+         * @param {string} targetName - A string to be searched
+         * @return {number} Average of all matched elements
+         *
+         * @example
+         *
+         *     avgAllElementsByName([{}], 'item-7')
+         */
+        const avgAllElementsByName = (items, targetName) => {
+            return items.filter(item => item.name === targetName).map(item => item.value).reduce((accumulator, currentValue, currentIndex, {length}) => { return accumulator + currentValue / length}, 0)
+        }
+
+        console.log('%c --- Question 2 ---', 'background: #4a2260');
+        console.log(avgAllElementsByName(items_array1, q2_targetName));
+        console.log('');
+
+
+
+
+        /******************************
+        ** Question 3
+        */
+
+        // a) What is wrong in the method `concatenameFields` of class `A` ?  How would you fix it?
+            // - it needs to be an instance method. we can fix this by removing the static keyword (same with concatenameFields method of class B)
+            // - no need to use the spread operator in the received argument as it's already being spread in the body (same with concatenameFields method of class B)
+            // - no need to return the this._someField field in the returned joined array
+
+        // b) Please fix the code in classes `A` and `B` so that testQuestion4() resolves to `true`
+            // see working code below
+
+        const makeRequest = (finalValue) => new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve(finalValue);
+            }, 50);
+        });
+
+        class A {
+            constructor(someField) {
+                this._someField = someField;
+                this._separator = ' ';
+            }
+
+            concatenameFields(values) {
+                return [...values].join(this._separator);
+            }
+
+            async save(items) {
+                const values = items.map(item => item.name);
+                const finalValue = this.concatenameFields(values);
+                const result = await makeRequest(finalValue);
+                return `THE RESULT IS: ${result}`;
+            }
+        }
+
+        class B extends A {
+            constructor(someField) {
+                super(someField);
+                this._separator = '-';
+            }
+
+            concatenameFields(values) {
+                return `[${super.concatenameFields(values)}]`;
+            }
+        }
+
+        async function testQuestion4() {
+            const testInput = [
+                { name: 'this' },
+                { name: 'test' },
+                { name: 'is' },
+                { name: 'fun' },
+            ];
+
+            const a = new A('base A');
+            const b = new B('base B');
+
+            const aResult = await a.save(testInput);
+            const bResult = await b.save(testInput);
+
+            const aIsOK = aResult === 'THE RESULT IS: this test is fun';
+            const bIsOK = bResult === 'THE RESULT IS: [this-test-is-fun]';
+
+            return aIsOK && bIsOK;
+        }
+
+        console.log('%c --- Question 3 ---', 'background: #4a2260');
+        console.log('aIsOK && bIsOK: ');
+        testQuestion4().then((result) => console.log(result))
+        console.log('');
+    </script>
+</html>

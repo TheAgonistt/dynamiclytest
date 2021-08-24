@@ -1,0 +1,8 @@
+/* actions */
+.actions {
+    min-width: 180px;
+}
+
+.actions > div > button:not(:last-child) {
+    margin-right: 10px;
+}
